@@ -1,0 +1,41 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.css";
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.mat-cell,
+.mat-footer-cell {
+  color: #424242;
+}
+
+.mat-table {
+  background: #f8f9fa;
+}
+
+.mat-header-cell {
+  color: #424242;
+  font-weight: 500;
+  font-size: 15px;
+  text-transform: capitalize;
+}
+
+th {
+  text-transform: capitalize;
+  font-weight: 500;
+}
+.mat-stroked-button {
+  min-width: 40px !important;
+  line-height: 36px !important;
+  padding: 0 8px !important;
+}
+.add-div {
+  height: 33px !important;
+  min-height: 1px !important;
+  float: right !important;
+}

@@ -1,0 +1,115 @@
+<div class="container mt-5 px-5">
+    <div class="col-md-12 mb-3">
+        <div class="row">
+            <div class="col-md-2 offset-md-10">
+                <button class="btn btn-outline-primary btn-block w-100" (click)="openAddGateways()">Add
+                    gateWay</button>
+            </div>
+        </div>
+    </div>
+
+    <table mat-table [dataSource]="dataSource" *ngIf="dataSource&&dataSource.length > 0" multiTemplateDataRows
+        class="mat-elevation-z8 mt-2">
+        <!-- Position Column -->
+        <ng-container matColumnDef="serialnumber">
+            <th mat-header-cell *matHeaderCellDef>Serial number</th>
+            <td mat-cell *matCellDef="let element">{{element.serialNumber}}</td>
+        </ng-container>
+        <!-- Position Column -->
+        <ng-container matColumnDef="humanName">
+            <th mat-header-cell *matHeaderCellDef>human-readable name</th>
+            <td mat-cell *matCellDef="let element">{{element.humanName}}</td>
+        </ng-container>
+        <!-- Position Column -->
+        <ng-container matColumnDef="position">
+            <th mat-header-cell *matHeaderCellDef>IPv4</th>
+            <td mat-cell *matCellDef="let element">{{element.position}}</td>
+        </ng-container>
+        <!-- Position Column -->
+        <ng-container matColumnDef="IPv4">
+            <th mat-header-cell *matHeaderCellDef>IPv4.</th>
+            <td mat-cell *matCellDef="let element">{{element.IPv}}</td>
+        </ng-container>
+        <!-- Position Column -->
+        <ng-container matColumnDef="length">
+            <th mat-header-cell *matHeaderCellDef>devices length</th>
+            <td mat-cell *matCellDef="let element">{{element.devices.length}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="expand">
+            <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-icon-button class="btn btn-outline-secondary" (click)="OpenEditGateways(element)">
+                    <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button class="btn btn-outline-danger" (click)="OpenDeleteGateways(element)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+                <button mat-icon-button aria-label="expand row"
+                    (click)="(expandedElement = expandedElement === element ? null : element); $event.stopPropagation()">
+                    <mat-icon *ngIf="expandedElement !== element">keyboard_arrow_down</mat-icon>
+                    <mat-icon *ngIf="expandedElement === element">keyboard_arrow_up</mat-icon>
+                </button>
+            </td>
+        </ng-container>
+
+
+
+        <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+        <ng-container matColumnDef="expandedDetail">
+            <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+                <div class="example-element-detail"
+                    [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+
+                    <div class="col-md-12 mt-2">
+
+
+                        <p class="text-capitalize h6 px-2 mb-1">List devices <strong>{{element.serialNumber}}</strong>
+
+
+                            <button class="btn btn-outline-primary p-1 add-div" (click)="openAddDevice(element)">
+                                <mat-icon>add</mat-icon>
+                            </button>
+                        </p>
+                        <table class="table" *ngIf="element.devices.length > 0">
+
+                            <thead>
+                                <tr>
+                                    <th scope="col">UID</th>
+                                    <th scope="col">vendor</th>
+                                    <th scope="col">status</th>
+                                    <th scope="col">date</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of element.devices">
+                                    <td>{{item.uuid}}</td>
+                                    <td>{{item.vendor}}</td>
+                                    <td>{{item.status}}</td>
+                                    <td>{{item.date | date:'fullDate' }}</td>
+                                    <td><button mat-icon-button class="btn btn-outline-danger"
+                                            (click)="OpenDeleteDeviceGateways(element.id,item.uuid)">
+                                            <mat-icon>delete</mat-icon>
+                                        </button></td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                        <div class="col-md-12 p-5 " *ngIf="element.devices.length == 0">
+                            <p class="h5 text-center text-warning text-capitalize ">
+                                no devices
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+        <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="example-element-row"
+            [class.example-expanded-row]="expandedElement === element"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+    </table>
+</div>
