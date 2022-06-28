@@ -67,7 +67,8 @@
                         <p class="text-capitalize h6 px-2 mb-1">List devices <strong>{{element.serialNumber}}</strong>
 
 
-                            <button class="btn btn-outline-primary p-1 add-div" (click)="openAddDevice(element)">
+                            <button class="btn btn-outline-primary p-1 add-div" *ngIf="element.devices.length < 10"
+                                (click)="openAddDevice(element)">
                                 <mat-icon>add</mat-icon>
                             </button>
                         </p>
